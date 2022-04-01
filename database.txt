@@ -1,0 +1,25 @@
+CREATE database ventas;
+use ventas;
+
+create table rol(
+    id_rol SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    rol VARCHAR(50) NOT NULL
+);
+create table area(
+    id_area SMALLINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    area VARCHAR(100) NOT NULL
+);
+
+create table users(
+    id_user INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nombre VARCHAR(60) NOT NULL,
+    correo VARCHAR (80) NOT NULL,
+    pass VARCHAR(255) NOT NULL,
+    id_rol SMALLINT NOT NULL,
+    id_area SMALLINT NOT NULL,
+    CONSTRAINT FOREIGN KEY (id_rol) REFERENCES rol(id_rol) ON DELETE CASCADE ON UPDATE CASCADE, 
+    CONSTRAINT FOREIGN KEY (id_area) REFERENCES area(id_area) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO rol(rol) VALUES ('Ventas'),('Atencion al cliente'),('Administrador');
+INSERT INTO area(area) VALUES ('Productos de conveniencia'),('Productos de comparación'),('Productos de especialidad'),('Productos no buscados');

@@ -69,21 +69,71 @@ footer a:hover{
     font-size: 20px;
     border: 0;
     outline: none;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     border-bottom: 3px solid #325288;
 }
-.form-name:focus,.form-password:focus{
-    /* border: 0; */
+.form-name:focus,.form-password:focus,.form-correo:focus{
     border-bottom: 3px solid #D96098;
     color: #D96098;
+}
+.form-name:invalid,.form-password:invalid,.form-correo:invalid{
+    color: rgb(253, 90, 49);
+    border-bottom: 3px solid rgb(253, 90, 49);
+}
+.form-name:valid,.form-password:valid,.form-correo:valid{
+    color: rgb(17, 160, 64);
+    border-bottom: 3px solid rgb(17, 160, 64);
 }
 .btn-login-log{
     width: 100%;
     margin-bottom: 10px;
 }
 .label-rol, .label-area{
-    width: 50%;
+    width: 100%;
+    font-size: 20px;
+    color: #325288;
+    font-weight: bold;
 }
 .select-rol, .select-area{
-    width: 49%;
+    font-size: 20px;
+    width: 50%;
+    outline: none;
+}
+/* .select-area:invalid, .select-rol:invalid{
+    border: 3px solid rgb(253, 90, 49);
+}
+.select-area:valid, .select-rol:valid{
+    border: 3px solid rgb(17, 160, 64);
+} */
+.select-area option,.select-rol option{
+    background-color: #325288;
+    color: #fff;
+}
+.errFormato{
+    padding: 10px;
+    background-color: rgb(228, 53, 9,0.3);
+    transition: all 0.5s ease-out;
+}
+
+.sp-rol{
+    border-bottom: 3px solid #D96098;
+    color: #D96098;
+}
+.sp-area{
+    border-bottom: 3px solid #24A19C;
+    color: #24A19C;
+}
+.info{
+    width: 70%;
+    float: right;
+    text-align: right;
+}
+.cerrar{
+    width: 20%;
+    text-align: left;
+}
+
+.content{
+    margin-top: 30px;
+    padding: 10px;
 }
