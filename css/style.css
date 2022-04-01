@@ -1,0 +1,89 @@
+:root{
+    --main-color: #ffff;
+}
+
+.color-active{
+    background-color: #325288;
+    color: #fff;
+}
+.container{
+    padding: 20px;
+}
+.important{
+    margin-top: 15px;
+    padding: 20px;
+}
+.card{
+    margin: 20px;
+}
+.card-img{
+    height: 200px;
+    object-fit: cover;
+}
+.card-title, .card-text{
+    color: #325288;
+}
+.del{
+    color: rgba(50, 82, 136,0.8);
+}
+
+footer a{
+    color: #24A19C;
+}
+footer a:hover{
+    color: #D96098;
+}
+.btn-btn{
+    margin-top: 30px;
+    text-align: center;
+}
+.btn-login{
+    background-color: #D96098;
+    /* background-color: #FAEEE7; */
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 15px;
+}
+.btn-login:hover{
+    transition: all 0.2s ease-in-out;
+    background-color: rgba(217, 96, 152,0.8);
+    opacity: 1;
+    color: #fff;
+}
+
+/* --------------------------------- LOGIN ------------------- */
+.form-text{
+    text-align: center;
+    color: #325288;
+}
+.formulario{
+    /* padding: 20px; */
+    margin: 10px auto;
+    width: 50%;
+}
+.form-name,.form-password,.form-correo{
+    width: 100%;
+    border-radius: 0;
+    font-size: 20px;
+    border: 0;
+    outline: none;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #325288;
+}
+.form-name:focus,.form-password:focus{
+    /* border: 0; */
+    border-bottom: 3px solid #D96098;
+    color: #D96098;
+}
+.btn-login-log{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.label-rol, .label-area{
+    width: 50%;
+}
+.select-rol, .select-area{
+    width: 49%;
+}
