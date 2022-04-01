@@ -1,4 +1,15 @@
 <?php
+    function encrypt($string) {
+        $METHOD = "AES-256-CBC";
+        $SECRET_KEY = "&ven%tas@2022";
+        $SECRET_IV = "416246";
+        $output=false;
+        $key = hash('sha256',$SECRET_KEY);
+        $iv=substr(hash('sha256',$SECRET_IV),0,16);
+        $output=openssl_encrypt($string,$METHOD,$key,0,$iv);
+        $output=base64_encode($output);
+        return $output;
+    }
 if(!empty($_POST)){
     $nombre = (isset($_POST['nombre']) ? $_POST['nombre'] : NULL);
     $pass  = (isset($_POST['pass']) ? $_POST['pass'] : NULL);
@@ -7,8 +18,6 @@ if(!empty($_POST)){
         if(!preg_match("/^[A-Za-zÀ-ÿ\s]{4,60}$/",$nombre) && !preg_match("/[A-Za-z0-9]{8,16}/",$pass)){
             echo "<div class='errFormato'>Por favor, rellene todos los campos correctamente para iniciar sesión.</div>";
         }else{
-            require "config/Connection.php";
-            $cnx = Connection::connectDB();
             try {
                 $sql = "SELECT * FROM users WHERE nombre = ?";
                 $query = $cnx->prepare($sql);
@@ -17,9 +26,13 @@ if(!empty($_POST)){
                 if($query->rowCount()===1){
                     foreach($query as $data){
                         if(password_verify($pass,$data['pass'])){
-                            $_SESSION["user"] = $data; // GUARDA LA SESIÓN PARA USARLO DESPUÉS
+                            $cadenaToken = $data['id_rol']."-".$data['id_area']."-".$data['nombre']."-".$data['id_user'];
+                            $encryption = encrypt($cadenaToken);
+                            
+                            $encryptIdUser = encrypt($data['id_user']);
+                            $_SESSION["user".$data['id_user']] = $encryption;
                             ?><script>
-                                window.location.href='sections/index.php';
+                                window.location.href='sections/index.php?token=<?php echo $encryptIdUser; ?>';
                                 localStorage.setItem("login", "true");
                             </script><?php
                         }else{

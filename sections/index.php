@@ -1,8 +1,21 @@
 <?php
     session_start();
-    if (!isset($_SESSION["user"])){
+    $token = $_GET['token'];
+    function decryption($string){
+        $METHOD = "AES-256-CBC";
+        $SECRET_KEY = "&ven%tas@2022";
+        $SECRET_IV = "416246";
+        $key = hash('sha256',$SECRET_KEY);
+        $iv=substr(hash('sha256',$SECRET_IV),0,16);
+        $output=openssl_decrypt(base64_decode($string),$METHOD,$key,0,$iv);
+        return $output;
+    }
+    $decryptionToken = decryption($token);
+    if (!isset($_SESSION["user".$decryptionToken])){
         header("Location: ../login.php");
     }
+    $decryption = decryption($_SESSION['user'.$decryptionToken]);
+    $dataUser = explode('-',$decryption);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,39 +25,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
     <link rel="stylesheet" href="../css/style.css">
-    <title>Inicio</title>
+    <title><?php
+        if($dataUser[0] == 3) echo "Administrador | ".$dataUser[2];
+        if($dataUser[0] == 2) echo "Atención al cliente | ".$dataUser[2];
+        if($dataUser[0] == 1) echo "Ventas | ".$dataUser[2];
+    ?></title>
 </head>
 <body class="color-active">
     <main>
         <div class="container">
             <div class="important">
                 <div class="info">
-                    <h2>Bienvenido(a) <?php echo $_SESSION["user"]["nombre"]; ?></h2>
+                    <h2>Bienvenido(a) <?php echo $dataUser[2]; ?></h2>
                     <h6>Ha iniciado sesión con el rol de <span class="sp-rol"><?php
-                        if(($_SESSION["user"]["id_rol"]) === 3) echo "Administrdor";
-                        if(($_SESSION["user"]["id_rol"]) === 2) echo "Atención al cliente";
-                        if(($_SESSION["user"]["id_rol"]) === 1) echo "Ventas";
+                        if($dataUser[0] == 3) echo "Administrador";
+                        if($dataUser[0] == 2) echo "Atención al cliente";
+                        if($dataUser[0] == 1) echo "Ventas";
                         ?></span>
                     <?php
-                        if(($_SESSION["user"]["id_rol"]) === 1){
-                            if(($_SESSION["user"]["id_area"]) === 1) echo "en el área de <span class='sp-area'>Productos de conveniencia</span>";
-                            if(($_SESSION["user"]["id_area"]) === 2) echo "en el área de <span class='sp-area'>Productos de comparación</span>";
-                            if(($_SESSION["user"]["id_area"]) === 3) echo "en el área de <span class='sp-area'>Productos de especialidad</span>";
-                            if(($_SESSION["user"]["id_area"]) === 4) echo "en el área de <span class='sp-area'>Productos no buscados</span>";
+                        if($dataUser[0] == 1){
+                            if($dataUser[1] == 1) echo "en el área de <span class='sp-area'>Productos de conveniencia</span>";
+                            if($dataUser[1] == 2) echo "en el área de <span class='sp-area'>Productos de comparación</span>";
+                            if($dataUser[1] == 3) echo "en el área de <span class='sp-area'>Productos de especialidad</span>";
+                            if($dataUser[1] == 4) echo "en el área de <span class='sp-area'>Productos no buscados</span>";
                         };
     
                     ?>
                     </h6>
                 </div>
                 <div class="cerrar">
-                    <a class="btn-login" href="cerrar.php">Cerrar sesión</a>
+                    <a class="btn-login" href="cerrar.php?token=<?php echo $token; ?>">Cerrar sesión</a>
                 </div>
             </div>
 
             <div class="content">
                 <?php
-                switch ($_SESSION["user"]["id_rol"]) {
+                switch ($dataUser[0]) {
                     case '1':
                         # Ventas
                         // require "ventas.php";
@@ -70,7 +88,7 @@
     </main>
     <template id="my-template">
     <swal-title>
-        ¡Bievenido(a) <?php echo $_SESSION["user"]["nombre"]; ?>!
+        ¡Bievenido(a) <?php echo $dataUser[2]; ?>!
     </swal-title>
     <swal-icon type="success" color="#325288"></swal-icon>
     <swal-param name="allowEscapeKey" value="false" />

@@ -1,7 +1,24 @@
 <?php
     session_start();
-    if (isset($_SESSION["user"])){
-        header("Location: sections/index.php");
+    require "config/Connection.php";
+    $cnx = Connection::connectDB();
+
+    $sql = "SELECT id_user FROM users";
+    $query = $cnx->prepare($sql);
+    $query->execute();
+    $activos=0;
+    foreach($query as $data){
+        if(isset($_SESSION["user".$data['id_user']])) {
+            $activos++;
+        };
+    }
+    if(isset($_GET['c']) && $_GET['c'] == "logout"){
+        $activos--;
+    }
+    if($activos>=1 ||  $_GET['c'] == "logout") {
+        ?><div class='errFormato text-center'>
+        <h5>Parace que hay <?php echo ($activos == 1) ? " una sesión activa": "algunas sesiones activas"; ?> en el sistema.</h5>
+        </div><?php
     }
 ?>
 <!DOCTYPE html>
@@ -13,8 +30,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="img/favicon.png" />
     <link rel="stylesheet" href="css/style.css">
-    <title>Login</title>
+    <title>Iniciar sesión</title>
 </head>
 <body>
     <main>
