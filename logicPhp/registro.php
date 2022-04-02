@@ -11,6 +11,14 @@ if(!empty($_POST)){
             echo "<div class='errFormato'>Por favor, rellene todos los campos correctamente para registrarse.</div>";
         }else{
             try {
+                // Validar usuario existente
+                $sqlName = "SELECT nombre FROM users WHERE nombre = ?";
+                $queryName = $cnx->prepare($sqlName);
+                $queryName->bindParam(1,$nombre);
+                $queryName->execute();
+                if($queryName->rowCount()>=1){
+                    echo "<div class='errFormato'>Ya existe un usuario con el mismo nombre, por favor registrese con otro.</div>";
+                }else{                    
                 $sqlInsert = "INSERT INTO users(nombre,correo,pass,id_rol,id_area) VALUES (?,?,?,?,?)";
                 $queryInsert = $cnx->prepare($sqlInsert);
                 $encrypt = password_hash($pass,PASSWORD_BCRYPT);
@@ -27,11 +35,12 @@ if(!empty($_POST)){
                         allowOutsideClick: false,
                     }).then((button)=>{
                         if(button.isConfirmed === true){
-                            location.href=`login.php`;
+                            location.href=`login`;
                         }
                     });
                 </script>
                 <?php
+                }
             } catch (PDOException $th) {
                 echo "<div class='errFormato'>Ha ocurrido un error, no fue posible realizar su registro al sistema.</div>";
             }

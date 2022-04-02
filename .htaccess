@@ -1,0 +1,14 @@
+ErrorDocument 404 http://localhost/Projects/DWP-Seguridad_roles_de_usuario/404
+Options -Indexes
+<files .htaccess>
+order allow,deny
+deny from all
+</files>
+RewriteEngine On
+RewriteRule ^inicio$ index.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^registro$ registro.php [L]
+RewriteRule ^usuario/([a-zA-Z0-9]+)$ sections/index.php?token=$1 [L]
+RewriteRule ^usuario/cerrar/([a-zA-Z0-9]+)$ sections/cerrar.php?token=$1 [L]
+RewriteRule ^logout$ login.php?c=logout [L]
+RewriteRule ^404$ 404.php [L]

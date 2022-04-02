@@ -32,7 +32,7 @@ if(!empty($_POST)){
                             $encryptIdUser = encrypt($data['id_user']);
                             $_SESSION["user".$data['id_user']] = $encryption;
                             ?><script>
-                                window.location.href='sections/index.php?token=<?php echo $encryptIdUser; ?>';
+                                window.location.href='usuario/<?php echo $encryptIdUser; ?>';
                                 localStorage.setItem("login", "true");
                             </script><?php
                         }else{

@@ -3,7 +3,7 @@
     require "config/Connection.php";
     $cnx = Connection::connectDB();
 
-    $sql = "SELECT id_user FROM users";
+    $sql = "SELECT id_user,nombre FROM users";
     $query = $cnx->prepare($sql);
     $query->execute();
     $activos=0;
@@ -12,13 +12,17 @@
             $activos++;
         };
     }
-    if(isset($_GET['c']) && $_GET['c'] == "logout"){
-        $activos--;
-    }
-    if($activos>=1 ||  $_GET['c'] == "logout") {
-        ?><div class='errFormato text-center'>
-        <h5>Parace que hay <?php echo ($activos == 1) ? " una sesión activa": "algunas sesiones activas"; ?> en el sistema.</h5>
-        </div><?php
+    $c = (isset($_GET['c']) ? $_GET['c'] : NULL);
+    if(isset($_GET['c']) && $_GET['c'] == "logout") $activos--;
+    if($activos>=1 ||  $c == "logout") {
+
+        if($activos == 1) {
+            echo "<div class='errFormato text-center'>Parace que hay una sesión activa en el sistema.</h5></div>";
+        }else if($activos >=2){
+            echo "<div class='errFormato text-center'>Parace que hay algunas sesiones activas en el sistema.</h5></div>";
+        }else{
+            echo "";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -40,6 +44,7 @@
             <div class="important form-text">
                 <h2>Iniciar sesión</h2>
                 <p>¡Bienvenido! Inicie sesión para acceder al sistema.</p>
+                <p><a href="inicio">Ir a Inicio</a></p>
             </div>
             <div class="formulario">
                 <div class="tab-content">
@@ -51,11 +56,12 @@
 
                     <div class="form-outline mb-4">
                         <input type="password" name="pass" id="loginPassword" class="form-password" placeholder="Contraseña" minlength="8" required pattern="[A-Za-z0-9]{8,16}" />
+                        <span style="color:red;" class="msj">*La contraseña puede tener mayúsculas, minúsculas y números, no se permiten caracteres especiales</span>
                     </div>
                     <div class="row mb-4">
 
                     <div class="col-md-6 d-flex">
-                        <a href="#!">¿Olvidó su contraseña?</a>
+                        <a href="#!" class="gde">¿Ha olvidado su contraseña?</a>
                     </div>
                     </div>
                     <div class="btn-btn">
@@ -63,7 +69,7 @@
                     </div>
                     <br>
                     <div class="text-center">
-                        <p>¿Aún no se ha registrado? <a href="registro.php">Registrese</a></p>
+                        <p class="gde">¿Aún no se ha registrado? <a href="registro">Registrese</a></p>
                     </div>
                     </form>
                     <?php require "logicPhp/login.php"; ?>
@@ -73,8 +79,8 @@
             </div>
         </div>
     </main>
-    <footer class="">
-        <div class="text-center">
+    <footer class="footer-form">
+        <div class="text-center icons">
             <!-- Facebook -->
             <a class="fb-ic"><i class="bi bi-facebook"></i></a>
             <!-- Twitter -->
@@ -90,8 +96,8 @@
         </div>
 
         <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="/"> MDBootstrap.com</a>
+        <div class="footer-copyright text-center py-3">© 2022 Copyright
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum at mollitia, <br> praesentium cupiditate fugiat tempore debitis</p>
         </div>
         <!-- Copyright -->
     </footer>

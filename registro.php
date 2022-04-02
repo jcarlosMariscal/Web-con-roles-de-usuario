@@ -15,6 +15,7 @@
     $queryVal->bindParam(1,$id);
     $queryVal->execute();
     $res = $queryVal->rowCount();
+
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +38,7 @@
             <div class="important form-text">
                 <h2>Registro</h2>
                 <p>Ingrese los datos que se solicitan para su registro al sistema.</p>
+                <p><a href="login">Ir a login</a></p>
             </div>
             <div class="formulario">
                 <div class="tab-content">
@@ -51,6 +53,7 @@
 
                     <div class="form-outline mb-4">
                         <input type="password" name="pass" id="loginPassword" class="form-password" placeholder="Contraseña" minlength="8" required pattern="[A-Za-z0-9]{8,16}" />
+                        <span style="color:red;" class="msj">*La contraseña puede tener mayúsculas, minúsculas y números, no se permiten caracteres especiales</span>
                     </div>
                     <div class="form-outline mb-4">
                         <?php if($res===0) {
@@ -96,8 +99,8 @@
             </div>
         </div>
     </main>
-    <footer class="">
-        <div class="text-center">
+    <footer class="footer-form">
+        <div class="text-center icons">
             <!-- Facebook -->
             <a class="fb-ic"><i class="bi bi-facebook"></i></a>
             <!-- Twitter -->
@@ -113,8 +116,8 @@
         </div>
 
         <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="/"> MDBootstrap.com</a>
+        <div class="footer-copyright text-center py-3">© 2022 Copyright
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum at mollitia, <br> praesentium cupiditate fugiat tempore debitis</p>
         </div>
         <!-- Copyright -->
     </footer>

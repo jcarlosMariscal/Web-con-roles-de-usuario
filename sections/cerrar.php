@@ -17,5 +17,5 @@ $dataUser = explode('-',$decryption);
 if(isset($_SESSION["user".$dataUser[3]])){
     unset($_SESSION["user".$dataUser[3]]);
     // session_destroy();
-    header("Location: ../login.php?c=logout");
+    header("Location: ../../logout");
 }
