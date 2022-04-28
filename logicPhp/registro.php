@@ -12,12 +12,13 @@ if(!empty($_POST)){
         }else{
             try {
                 // Validar usuario existente
-                $sqlName = "SELECT nombre FROM users WHERE nombre = ?";
+                $sqlName = "SELECT nombre FROM users WHERE nombre = ? OR correo = ?";
                 $queryName = $cnx->prepare($sqlName);
                 $queryName->bindParam(1,$nombre);
+                $queryName->bindParam(2,$correo);
                 $queryName->execute();
                 if($queryName->rowCount()>=1){
-                    echo "<div class='errFormato'>Ya existe un usuario con el mismo nombre, por favor registrese con otro.</div>";
+                    echo "<div class='errFormato'>Parece que ya existe un usuario con el mismo nombre/correo. Intente con otro.</div>";
                 }else{                    
                 $sqlInsert = "INSERT INTO users(nombre,correo,pass,id_rol,id_area) VALUES (?,?,?,?,?)";
                 $queryInsert = $cnx->prepare($sqlInsert);

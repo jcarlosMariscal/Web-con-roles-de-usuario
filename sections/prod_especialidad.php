@@ -1,3 +1,10 @@
+<?php
+$host= $_SERVER["HTTP_HOST"];
+$url= $_SERVER["REQUEST_URI"];
+if("http://" . $host . $url === "http://carlosjc.epizy.com/sections/prod_especialidad.php"){
+    header("Location: ../inicio");
+}
+?>
 <div class="prod_especialidad">
     <h5>Productos de especialidad más vendidos durante los últimos días.</h5>
     <div class="container mb-5 mt-5">

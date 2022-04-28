@@ -1,3 +1,10 @@
+<?php
+$host= $_SERVER["HTTP_HOST"];
+$url= $_SERVER["REQUEST_URI"];
+if("http://" . $host . $url === "http://carlosjc.epizy.com/sections/prod_comparacion.php"){
+    header("Location: ../inicio");
+}
+?>
 <div class="prod_comparacion">
     <h5>Productos de comparación más vendidos durante los últimos días.</h5>
     <div class="container mb-5 mt-5">
@@ -51,7 +58,7 @@
             <div class="graf2">
                 <div id="piechart2"></div>
             </div>
-            <br><br><br>
+            <br><br>
         <div id="curve_chart" style="width: 900px; height: 500px"></div>
     </div>
 </div>

@@ -1,3 +1,10 @@
+<?php
+$host= $_SERVER["HTTP_HOST"];
+$url= $_SERVER["REQUEST_URI"];
+if("http://" . $host . $url === "http://carlosjc.epizy.com/sections/atencionCliente.php"){
+    header("Location: ../inicio");
+}
+?>
 <div class="atencion_cliente">
     <h5>Una buena atención es un factor que ayuda a mantener una buena relación con los clientes.</h5>
     <div class="enlaces container">
