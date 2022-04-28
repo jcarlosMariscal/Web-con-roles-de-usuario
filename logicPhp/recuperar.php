@@ -10,15 +10,6 @@
     $mail = new PHPMailer(true);
     $cnx = Connection::connectDB();
     function encrypt($string) {
-        $METHOD = "AES-256-CBC";
-        $SECRET_KEY = "&ven%tas@2022";
-        $SECRET_IV = "416246";
-        $output=false;
-        $key = hash('sha256',$SECRET_KEY);
-        $iv=substr(hash('sha256',$SECRET_IV),0,16);
-        $output=openssl_encrypt($string,$METHOD,$key,0,$iv);
-        $output=base64_encode($output);
-        return $output;
     }
 if(!empty($_POST)){
     $correo = (isset($_POST['correo']) ? $_POST['correo'] : NULL);
